@@ -1,14 +1,31 @@
 ---
 title: "Draft Quarto document"
-author: "Your Name"
+author: "Katrine Bovién Gørlitz"
 format: html
 ---
 
 ## Header 1
 
 ```{r setup}
+library(tidyverse)
+library(here)
+library(snakecase)
 #| include: false
 ```
+
+##Importing new data 
+# Find function: Ctrl + shift + p
+#New code block: Ctrl + ALt + i
+#New pipe: Cmd + shift m 
+#This data is written in pascal case (CollectionDatetime), we change it to snake case, which is where all words are written in lower case with words devided by a lowercase (and we therefore we added "library(snakecase)" in the code chunk above, and ", name_repair = to_snake_case)
+#Insert "Help" section by inserting "?read_csv" in the console. You just use it when you need help, and it therefore should not be a part 
+```{r}
+here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |> 
+  read_csv(show_col_types = FALSE,
+           name_repair = to_snake_case, 
+           n_max = 100)
+```
+
 
 ```{r}
 # Code chunk
