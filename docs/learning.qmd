@@ -19,14 +19,51 @@ library(snakecase)
 #New pipe: Cmd + shift m 
 #This data is written in pascal case (CollectionDatetime), we change it to snake case, which is where all words are written in lower case with words devided by a lowercase (and we therefore we added "library(snakecase)" in the code chunk above, and ", name_repair = to_snake_case)
 #Insert "Help" section by inserting "?read_csv" in the console. You just use it when you need help, and it therefore should not be a part 
+# To get an overview of just a bit of the data, we typed in "n_max = 100", which provides a tibble with max 100 rows
 ```{r}
-here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |> 
-  read_csv(show_col_types = FALSE,
-           name_repair = to_snake_case, 
-           n_max = 100)
+here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
+  read_csv(
+    show_col_types = FALSE,
+    name_repair = to_snake_case,
+    n_max = 100
+  )
+```
+
+##Importing new data by myself without n_max
+```{r}
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read_csv(
+    show_col_types = FALSE,
+    name_repair = to_snake_case,
+  )
 ```
 
 
+##Importing new data by myself with n_max
 ```{r}
-# Code chunk
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read_csv(
+    show_col_types = FALSE,
+    name_repair = to_snake_case,
+    n_max = 100
+  )
+```
+##Writing codes that can be used import more than one data set, at the time 
+#name <- function(argument1, argument2) {
+  # body of function
+  output <- ...
+  return(output)
+}
+```{r}
+#' Add two numbers together
+#'
+#' @param num1 A number here.
+#' @param num2 A number here
+#'
+#' @returns The sum of two numbers
+#'
+add_numbers <- function(num1, num2) {
+  added <- num1 + num2
+  return(added)
+}
 ```
