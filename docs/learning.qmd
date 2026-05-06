@@ -135,3 +135,21 @@ hr_data <- hr_files |>
 
 hr_data
 ```
+
+## Exercise: Convert map to function and use on sleep
+```{r}
+read_all <- function(filename) {
+  files <- here("data-raw/nurses-stress/") |>
+  dir_ls(regexp = filename, recurse = TRUE)
+
+  data <- files |>
+  purrr::map(read) |>
+  purrr::list_rbind(names_to = "file_path_id")
+
+  return(data)
+}
+
+read_all("HR.csv.gz")
+read_all("IBI.csv.gz")
+```
+
