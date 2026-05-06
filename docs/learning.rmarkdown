@@ -1,0 +1,138 @@
+---
+title: "Draft Quarto document"
+author: "Katrine Bovién Gørlitz"
+format: html
+---
+
+## Header 1
+
+```{r setup}
+library(tidyverse)
+library(here)
+library(fs)
+source(here("R/functions.R"))
+#| include: false
+```
+
+##Importing new data 
+# Find function: Ctrl + shift + p
+#New code block: Ctrl + ALt + i
+#New pipe: Cmd + shift m 
+#This data is written in pascal case (CollectionDatetime), we change it to snake case, which is where all words are written in lower case with words devided by a underscore (and therefore we added "library(snakecase)" in the code chunk above, and ", name_repair = to_snake_case")
+#Insert "Help" section by inserting "?read_csv" in the console. You just use it when you need help, and it therefore should not be a part 
+# To get an overview of just a bit of the data, we typed in "n_max = 100", which provides a tibble with max 100 rows
+#We delete library(snakecase)
+```{r}
+#| eval: FALSE
+here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
+  readr::read_csv(
+    show_col_types = FALSE,
+    name_repair = snakecase::to_snake_case,
+    n_max = 100
+  )
+```
+
+##Importing new data by myself without n_max
+```{r}
+#| eval: FALSE
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  readr::read_csv(
+    show_col_types = FALSE,
+    name_repair = snakecase::to_snake_case,
+  )
+```
+
+
+##Importing new data by myself with n_max
+```{r}
+#| eval: FALSE
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  readr::read_csv(
+    show_col_types = FALSE,
+    name_repair = snakecase::to_snake_case,
+    n_max = 100
+  )
+```
+##Writing codes that can be used import more than one data set, at the time 
+#name <- function(argument1, argument2) {
+  # body of function
+  output <- ...
+  return(output)
+}
+```{r}
+#' Add two numbers together
+#'
+#' @param num1 A number here.
+#' @param num2 A number here
+#'
+#' @returns The sum of two numbers
+#'
+add_numbers <- function(num1, num2) {
+  added <- num1 + num2
+  return(added)
+}
+```
+#By writing "max_rows=100" we set the default value to 100 rows, meaning that if we do not specify in our code how many rows we want, then it automatically provides 100 rows. 
+```{r}
+#| eval: false
+#| include: false
+
+#' Read in one nurses' stress data file
+#'
+#' @param file_path A path to a data file
+#'
+#' @returns outputs a data frame / tibble
+read <- function(file_path, max_rows = 100) {
+  data <- file_path |>
+    readr::read_csv(
+      show_col_types = FALSE,
+      name_repair = snakecase::to_snake_case,
+      n_max = max_rows
+    )
+  return(data)
+}
+```
+
+```{r}
+here("data-raw/nurses-stress/stress/5C/5C_1586886626/HR.csv.gz") |>
+  read()
+```
+
+```{r}
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read()
+```
+
+```{r}
+# Outputs only 100 rows
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read()
+```
+```{r}
+# Outputs only 1000 rows
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read(max_rows = 1000)
+```
+
+```{r}
+# Outputs all rows (`Inf` means infinity)
+here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
+  read(max_rows = Inf)
+```
+#You can insert "#| eval:false" in the top of your code and it wont run it 
+
+##Using map 
+#To see list number 1 write hr_data[[1]], and number ect 100 hr_data[[100]] in the console. 
+```{r}
+hr_files <- here("data-raw/nurses-stress/") |>
+  dir_ls(regexp = "HR.csv.gz", recurse = TRUE)
+
+hr_files
+
+hr_data <- hr_files |>
+  map(read) |> # NO BRACKETS!
+  list_rbind(names_to = "file_path_id")
+
+hr_data
+```
+
