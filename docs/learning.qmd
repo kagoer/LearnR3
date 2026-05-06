@@ -17,7 +17,7 @@ source(here("R/functions.R"))
 # Find function: Ctrl + shift + p
 #New code block: Ctrl + ALt + i
 #New pipe: Cmd + shift m 
-#This data is written in pascal case (CollectionDatetime), we change it to snake case, which is where all words are written in lower case with words devided by a lowercase (and we therefore we added "library(snakecase)" in the code chunk above, and ", name_repair = to_snake_case)
+#This data is written in pascal case (CollectionDatetime), we change it to snake case, which is where all words are written in lower case with words devided by a underscore (and therefore we added "library(snakecase)" in the code chunk above, and ", name_repair = to_snake_case")
 #Insert "Help" section by inserting "?read_csv" in the console. You just use it when you need help, and it therefore should not be a part 
 # To get an overview of just a bit of the data, we typed in "n_max = 100", which provides a tibble with max 100 rows
 #We delete library(snakecase)
@@ -119,4 +119,4 @@ here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
 here("data-raw/nurses-stress/stress/5C/5C_1586886712/HR.csv.gz") |>
   read(max_rows = Inf)
 ```
-#You can insert "#| false" in the top of your code and it wont run it 
+#You can insert "#| eval:false" in the top of your code and it wont run it 
