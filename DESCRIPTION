@@ -6,8 +6,9 @@ Encoding: UTF-8
 URL: https://github.com/kagoer/LearnR3
 BugReports: https://github.com/kagoer/LearnR3/issues
 Imports: 
-    base,
+    fs,
     here,
+    purrr,
     readr,
     snakecase
 Depends: 
